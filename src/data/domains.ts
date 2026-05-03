@@ -1,46 +1,56 @@
 export type DomainStatus = 'Reserved' | 'Unused' | 'Personal' | 'Experimental';
 
 export interface Domain {
-  hostname: string;
-  label: string;
-  description: string;
+  name: string;
   status: DomainStatus;
+  category: string;
+  description: string;
+  note: string;
 }
 
 export const domains: Domain[] = [
   {
-    hostname: 'getflowhub.app',
-    label: 'getflowhub.app',
-    description: 'Reserved for FlowHub — the canonical app domain.',
+    name: 'getflowhub.app',
     status: 'Reserved',
+    category: 'FlowHub',
+    description: 'Primary reserved domain for the future FlowHub product.',
+    note: 'Not live yet',
   },
   {
-    hostname: 'getflowhub.xyz',
-    label: 'getflowhub.xyz',
-    description: 'Experimental FlowHub workspace for prototypes and ideas.',
+    name: 'getflowhub.xyz',
     status: 'Experimental',
+    category: 'FlowHub',
+    description:
+      'Alternate FlowHub domain kept for experiments, redirects, or future use.',
+    note: 'Parked',
   },
   {
-    hostname: 'getflowhub.cloud',
-    label: 'getflowhub.cloud',
-    description: 'Cloud / infrastructure flavored FlowHub domain.',
+    name: 'getflowhub.cloud',
     status: 'Reserved',
+    category: 'Infrastructure',
+    description:
+      'Cloud-flavored FlowHub domain reserved for possible infrastructure or deployment use.',
+    note: 'Parked',
   },
   {
-    hostname: 'gamehubbg.com',
-    label: 'gamehubbg.com',
-    description: 'Held for a future gaming-adjacent project.',
+    name: 'gamehubbg.com',
     status: 'Unused',
+    category: 'GameHub',
+    description:
+      'Reserved domain for possible game-related projects or experiments.',
+    note: 'Inactive',
   },
   {
-    hostname: 'deyanilkov.com',
-    label: 'deyanilkov.com',
-    description: 'Personal branding and portfolio domain.',
+    name: 'deyanilkov.com',
     status: 'Personal',
+    category: 'Personal brand',
+    description:
+      'Personal branding domain reserved for a portfolio or public profile.',
+    note: 'Reserved',
   },
 ];
 
 export function findDomainByHostname(hostname: string): Domain | undefined {
   const normalized = hostname.toLowerCase().replace(/^www\./, '');
-  return domains.find((d) => d.hostname === normalized);
+  return domains.find((d) => d.name === normalized);
 }

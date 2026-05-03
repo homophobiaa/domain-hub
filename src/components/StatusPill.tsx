@@ -1,7 +1,8 @@
 import type { DomainStatus } from '../data/domains';
 
 interface Props {
-  status: DomainStatus | 'Live';
+  status: DomainStatus | 'Live' | 'Preview' | 'Unknown';
+  label?: string;
 }
 
 const classMap: Record<string, string> = {
@@ -10,13 +11,15 @@ const classMap: Record<string, string> = {
   Personal: 'pill pill--personal',
   Experimental: 'pill pill--experimental',
   Live: 'pill pill--live',
+  Preview: 'pill pill--preview',
+  Unknown: 'pill pill--unknown',
 };
 
-export function StatusPill({ status }: Props) {
+export function StatusPill({ status, label }: Props) {
   return (
     <span className={classMap[status] ?? 'pill'}>
       <span className="pill__dot" aria-hidden />
-      {status}
+      {label ?? status}
     </span>
   );
 }

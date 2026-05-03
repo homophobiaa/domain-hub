@@ -9,80 +9,89 @@ interface Props {
   index: number;
 }
 
+const statusClass: Record<Domain['status'], string> = {
+  Reserved: 'card--reserved',
+  Experimental: 'card--experimental',
+  Unused: 'card--unused',
+  Personal: 'card--personal',
+};
+
 export function DomainCard({ domain, active, index }: Props) {
   const [copied, setCopied] = useState(false);
-  const cardRef = useRef<HTMLElement>(null);
-  const timeoutRef = useRef<number | null>(null);
+  const ref = useRef<HTMLElement>(null);
+  const t = useRef<number | null>(null);
 
   const onMove = useCallback((e: React.PointerEvent<HTMLElement>) => {
-    const el = cardRef.current;
+    const el = ref.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const cx = ((e.clientX - rect.left) / rect.width) * 100;
-    const cy = ((e.clientY - rect.top) / rect.height) * 100;
+    const r = el.getBoundingClientRect();
+    const cx = ((e.clientX - r.left) / r.width) * 100;
+    const cy = ((e.clientY - r.top) / r.height) * 100;
     el.style.setProperty('--cx', `${cx}%`);
     el.style.setProperty('--cy', `${cy}%`);
+
+    // gentle 3D tilt
+    const rx = ((e.clientY - r.top) / r.height - 0.5) * -3;
+    const ry = ((e.clientX - r.left) / r.width - 0.5) * 4;
+    el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+  }, []);
+
+  const onLeave = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = '';
   }, []);
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(domain.hostname);
+      await navigator.clipboard.writeText(domain.name);
     } catch {
-      // Fallback: select-and-copy fails silently.
+      /* noop */
     }
     setCopied(true);
-    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
-    timeoutRef.current = window.setTimeout(() => setCopied(false), 1600);
-  }, [domain.hostname]);
+    if (t.current) window.clearTimeout(t.current);
+    t.current = window.setTimeout(() => setCopied(false), 1500);
+  }, [domain.name]);
 
-  const externalUrl = `https://${domain.hostname}`;
-
-  const style = { '--delay': `${index * 70}ms` } as CSSProperties;
+  const style = { '--delay': `${index * 60 + 120}ms` } as CSSProperties;
 
   return (
     <article
-      ref={cardRef}
+      ref={ref}
       onPointerMove={onMove}
-      className={`card${active ? ' card--active' : ''}`}
+      onPointerLeave={onLeave}
+      className={`card ${statusClass[domain.status]}${active ? ' card--active' : ''}`}
       style={style}
       aria-current={active ? 'true' : undefined}
     >
-      <div className="card__head">
-        <div>
-          <div className="card__host">{domain.label}</div>
-          {active && (
-            <span className="card__active-tag">Currently visiting</span>
-          )}
+      <div className="card__main">
+        <div className="card__row">
+          <span className="card__name">{domain.name}</span>
+          <span className="card__cat">· {domain.category}</span>
+          {active && <span className="card__active-tag">Currently here</span>}
         </div>
-        <StatusPill status={domain.status} />
+        <p className="card__desc">{domain.description}</p>
       </div>
-
-      <p className="card__desc">{domain.description}</p>
-
-      <div className="card__foot">
-        <span style={{ fontSize: 12, color: 'var(--ink-tertiary)', fontFamily: 'var(--font-mono)' }}>
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <div className="card__actions">
-          <button
-            type="button"
-            className={`iconbtn${copied ? ' iconbtn--copied' : ''}`}
-            onClick={handleCopy}
-            aria-label={`Copy ${domain.hostname}`}
-          >
-            {copied ? <CheckIcon /> : <CopyIcon />}
-            <span className="iconbtn__feedback">Copied</span>
-          </button>
-          <a
-            href={externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="iconbtn"
-            aria-label={`Open ${domain.hostname} in new tab`}
-          >
-            <ExternalIcon />
-          </a>
-        </div>
+      <div className="card__side">
+        <StatusPill status={domain.status} />
+        <button
+          type="button"
+          className={`iconbtn${copied ? ' iconbtn--copied' : ''}`}
+          onClick={handleCopy}
+          aria-label={`Copy ${domain.name}`}
+        >
+          {copied ? <CheckIcon /> : <CopyIcon />}
+          <span className="iconbtn__feedback">Copied</span>
+        </button>
+        <a
+          href={`https://${domain.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="iconbtn"
+          aria-label={`Open ${domain.name} in new tab`}
+        >
+          <ExternalIcon />
+        </a>
       </div>
     </article>
   );

@@ -12,14 +12,14 @@ export default function App() {
     <>
       <Background />
       <div className="app">
-        <TopNav />
-        <main className="main">
-          <div className="container">
+        <div className="container shell">
+          <TopNav />
+          <main className="hero" aria-label="Domain status">
             <Hero ctx={ctx} />
             <DomainList ctx={ctx} />
-          </div>
-        </main>
-        <Footer />
+          </main>
+          <Footer />
+        </div>
       </div>
     </>
   );

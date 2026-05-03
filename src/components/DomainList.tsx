@@ -1,5 +1,6 @@
 import { domains } from '../data/domains';
 import { DomainCard } from './DomainCard';
+import { AnimatedCount } from './AnimatedCount';
 import type { DomainContext } from '../hooks/useCurrentDomain';
 
 interface Props {
@@ -8,27 +9,22 @@ interface Props {
 
 export function DomainList({ ctx }: Props) {
   return (
-    <section className="section" id="domains" aria-labelledby="domains-title">
-      <header className="section__head">
-        <div>
-          <h2 className="section__title" id="domains-title">
-            Reserved & parked
-          </h2>
-          <p className="section__sub">
-            Each domain points here. The card matching your current host is highlighted.
-          </p>
-        </div>
-        <div className="section__count" aria-label={`${domains.length} domains`}>
-          <strong>{String(domains.length).padStart(2, '0')}</strong> domains
-        </div>
+    <section className="list" aria-labelledby="list-title">
+      <header className="list__head">
+        <h2 className="list__title" id="list-title">
+          Registry · parked domains
+        </h2>
+        <span className="list__count" aria-label={`${domains.length} domains`}>
+          <strong><AnimatedCount value={domains.length} /></strong> entries
+        </span>
       </header>
 
-      <div className="grid" role="list">
+      <div role="list" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {domains.map((d, i) => (
-          <div role="listitem" key={d.hostname}>
+          <div role="listitem" key={d.name}>
             <DomainCard
               domain={d}
-              active={ctx.domain?.hostname === d.hostname}
+              active={ctx.domain?.name === d.name}
               index={i}
             />
           </div>
