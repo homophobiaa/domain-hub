@@ -10,7 +10,6 @@ export function Footer() {
         <a href={GH_URL} target="_blank" rel="noopener noreferrer">
           @homophobiaa
         </a>
-        . Frontend-only. No backend. No tracking. Just a clean redirect target.
       </div>
       <div className="footer__links">
         <a

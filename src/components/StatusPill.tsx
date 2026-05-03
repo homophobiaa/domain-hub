@@ -1,7 +1,7 @@
 import type { DomainStatus } from '../data/domains';
 
 interface Props {
-  status: DomainStatus | 'Live' | 'Preview' | 'Unknown';
+  status: DomainStatus | 'Preview' | 'Unknown';
   label?: string;
 }
 

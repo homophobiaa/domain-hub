@@ -14,6 +14,7 @@ const statusClass: Record<Domain['status'], string> = {
   Experimental: 'card--experimental',
   Unused: 'card--unused',
   Personal: 'card--personal',
+  Live: 'card--live',
 };
 
 export function DomainCard({ domain, active, index }: Props) {
@@ -30,9 +31,8 @@ export function DomainCard({ domain, active, index }: Props) {
     el.style.setProperty('--cx', `${cx}%`);
     el.style.setProperty('--cy', `${cy}%`);
 
-    // gentle 3D tilt
-    const rx = ((e.clientY - r.top) / r.height - 0.5) * -3;
-    const ry = ((e.clientX - r.left) / r.width - 0.5) * 4;
+    const rx = ((e.clientY - r.top) / r.height - 0.5) * -2.5;
+    const ry = ((e.clientX - r.left) / r.width - 0.5) * 3.5;
     el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
   }, []);
 
@@ -67,31 +67,35 @@ export function DomainCard({ domain, active, index }: Props) {
       <div className="card__main">
         <div className="card__row">
           <span className="card__name">{domain.name}</span>
-          <span className="card__cat">· {domain.category}</span>
           {active && <span className="card__active-tag">Currently here</span>}
         </div>
         <p className="card__desc">{domain.description}</p>
+        <div className="card__meta">
+          <span className="card__cat">{domain.category}</span>
+        </div>
       </div>
       <div className="card__side">
         <StatusPill status={domain.status} />
-        <button
-          type="button"
-          className={`iconbtn${copied ? ' iconbtn--copied' : ''}`}
-          onClick={handleCopy}
-          aria-label={`Copy ${domain.name}`}
-        >
-          {copied ? <CheckIcon /> : <CopyIcon />}
-          <span className="iconbtn__feedback">Copied</span>
-        </button>
-        <a
-          href={`https://${domain.name}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="iconbtn"
-          aria-label={`Open ${domain.name} in new tab`}
-        >
-          <ExternalIcon />
-        </a>
+        <div className="card__actions">
+          <button
+            type="button"
+            className={`iconbtn${copied ? ' iconbtn--copied' : ''}`}
+            onClick={handleCopy}
+            aria-label={`Copy ${domain.name}`}
+          >
+            {copied ? <CheckIcon /> : <CopyIcon />}
+            <span className="iconbtn__feedback">Copied</span>
+          </button>
+          <a
+            href={`https://${domain.name}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="iconbtn"
+            aria-label={`Open ${domain.name} in new tab`}
+          >
+            <ExternalIcon />
+          </a>
+        </div>
       </div>
     </article>
   );

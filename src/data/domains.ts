@@ -1,4 +1,9 @@
-export type DomainStatus = 'Reserved' | 'Unused' | 'Personal' | 'Experimental';
+export type DomainStatus =
+  | 'Reserved'
+  | 'Unused'
+  | 'Personal'
+  | 'Experimental'
+  | 'Live';
 
 export interface Domain {
   name: string;
@@ -39,6 +44,14 @@ export const domains: Domain[] = [
     description:
       'Reserved domain for possible game-related projects or experiments.',
     note: 'Inactive',
+  },
+  {
+    name: 'deadvector.gamehubbg.com',
+    status: 'Live',
+    category: 'Game project',
+    description:
+      'Active browser game project hosted under the GameHub domain.',
+    note: 'Live project',
   },
   {
     name: 'deyanilkov.com',
