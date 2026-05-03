@@ -4,14 +4,13 @@ A hyper-premium, frontend-only domain hub for unused and reserved domains. Multi
 domains point to this same site — the page detects which one you arrived on and
 highlights it.
 
-> **Live URL:** _coming soon_  
+> **Live URL:** _all of the ones bellow_  
 > **Maintained by:** [@homophobiaa](https://github.com/homophobiaa)
 
 ## Screenshot
 
-> _Add a screenshot of the deployed site here._
->
-> `./docs/screenshot.png`
+  <img src="./docs/screenshot.jpeg" />
+
 
 ## Features
 
