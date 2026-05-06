@@ -9,7 +9,7 @@ highlights it.
 
 ## Screenshot
 
-  <img src="./docs/screenshot.jpeg" />
+  <img src="./docs/Screenshot.jpeg" />
 
 
 ## Features
