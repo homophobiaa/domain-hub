@@ -15,6 +15,14 @@ export interface Domain {
 
 export const domains: Domain[] = [
   {
+  name: 'domains.deyanilkov.com',
+  status: 'Live',
+  category: 'Domain Hub',
+  description:
+    'Central registry and launchpad for active projects, experimental platforms, and reserved infrastructure domains.',
+  note: 'Main hub',
+  },
+  {
     name: 'getflowhub.app',
     status: 'Reserved',
     category: 'FlowHub',
