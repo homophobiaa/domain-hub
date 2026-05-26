@@ -18,52 +18,64 @@ export const domains: Domain[] = [
     name: 'getflowhub.app',
     status: 'Reserved',
     category: 'FlowHub',
-    description: 'Primary reserved domain for the future FlowHub product.',
-    note: 'Not live yet',
+    description:
+      'Primary reserved domain for the future FlowHub productivity platform.',
+    note: 'Reserved',
   },
   {
     name: 'getflowhub.xyz',
     status: 'Experimental',
     category: 'FlowHub',
     description:
-      'Alternate FlowHub domain kept for experiments, redirects, or future use.',
-    note: 'Parked',
+      'Experimental FlowHub domain used for testing, redirects, and future concepts.',
+    note: 'Experimental',
   },
   {
     name: 'getflowhub.cloud',
     status: 'Reserved',
     category: 'Infrastructure',
     description:
-      'Cloud-flavored FlowHub domain reserved for possible infrastructure or deployment use.',
-    note: 'Parked',
+      'Infrastructure-focused FlowHub domain reserved for deployment or backend-related services.',
+    note: 'Reserved',
   },
   {
     name: 'gamehubbg.com',
-    status: 'Unused',
+    status: 'Live',
     category: 'GameHub',
     description:
-      'Reserved domain for possible game-related projects or experiments.',
-    note: 'Inactive',
+      'Community-driven game showcase platform created for a SoftUni school event.',
+    note: 'Active platform',
   },
   {
     name: 'deadvector.gamehubbg.com',
     status: 'Live',
     category: 'Game project',
     description:
-      'Active browser game project hosted under the GameHub domain.',
-    note: 'Live project',
+      'Fast-paced browser action game hosted as part of the GameHub ecosystem.',
+    note: 'Playable',
+  },
+  {
+    name: 'rindex.tech',
+    status: 'Live',
+    category: 'RIndex',
+    description:
+      "Web-based cybersecurity experience that analyzes digital habits and simulates potential attack paths to estimate a user's online vulnerability.",
+    note: 'In development',
   },
   {
     name: 'deyanilkov.com',
     status: 'Personal',
     category: 'Personal brand',
     description:
-      'Personal branding domain reserved for a portfolio or public profile.',
-    note: 'Reserved',
+      'Personal portfolio and public identity domain for projects, experiments, and branding.',
+    note: 'Personal',
   },
 ];
 
-export function findDomainByHostname(hostname: string): Domain | undefined {
+export function findDomainByHostname(
+  hostname: string
+): Domain | undefined {
   const normalized = hostname.toLowerCase().replace(/^www\./, '');
+
   return domains.find((d) => d.name === normalized);
 }
